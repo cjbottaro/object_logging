@@ -5,12 +5,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "object_logging"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Super simple logging for objects.}
+    gem.description = %Q{It's a pain to trudge through large log files.  Sometimes you just want to see log messages for one particular object.}
     gem.email = "cjbottaro@alumni.cs.utexas.edu"
     gem.homepage = "http://github.com/cjbottaro/object_logging"
-    gem.authors = ["cjbottaro"]
-    gem.add_development_dependency "thoughtbot-shoulda"
+    gem.authors = ["Christopher J. Bottaro"]
+    # gem.add_development_dependency "thoughtbot-shoulda"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError

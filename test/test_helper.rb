@@ -1,10 +1,42 @@
 require 'rubygems'
 require 'test/unit'
-require 'shoulda'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'object_logging'
 
 class Test::Unit::TestCase
+end
+
+class User
+  include ObjectLogging
+  
+  def foo
+    logger.debug("foo")
+  end
+  
+  def bar
+    logger.info("bar")
+  end
+end
+
+class Account
+  include ObjectLogging
+  
+  def foi
+    logger.debug("foi")
+  end
+  
+  def baz
+    logger.info("baz")
+  end
+  
+end
+
+class Person
+  include ObjectLogging
+  object_logging :rails_log
+end
+
+class Schmuck < Person
 end

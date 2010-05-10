@@ -1,18 +1,73 @@
 = object_logging
 
-Description goes here.
+Super simple logging for objects.
 
-== Note on Patches/Pull Requests
- 
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but
-   bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+== Why?
+
+It's a pain to trudge through large log files.  Sometimes you just want to see log messages for one particular object.
+
+== Usage
+
+  class Something
+    include ObjectLogging
+    def foo
+      logger.debug "entering"
+      logger.info "leaving"
+    end
+  end
+  
+  something = Something.new
+  something.foo
+  puts something.logger.log # => [DEBUG] Something#foo entering
+                            #    [INFO] Something#foo leaving
+
+This logs to memory.  Your log will be gone when the object goes out of scope.
+
+=== Logging to the Rails cache
+
+  class Something
+    include ObjectLogging
+    object_logging :rails_cache, :id => :proc_or_method_name_to_identify_object
+  end
+
+This is useful for when you want to view the log after the object goes out of scope.
+
+The option <tt>:id</tt> needs to a Proc or method name that returns a string that uniquely identifies the object (i.e. will be used as the cache key).
+
+=== Logging to the Rails log or STDOUT
+
+  class Something
+    include ObjectLogging
+    object_logging :rails_log
+  end
+
+  class Something
+    include ObjectLogging
+    object_logging :stdout
+  end
+
+This logs to memory, but also logs to <tt>Rails.logger</tt> or <tt>STDOUT</tt>.
+
+== Sharing loggers
+
+You can pass Logger instances between your objects.  This is useful for when you want an object to temporarily log to another object's log.
+
+  a = Account.new
+  u = User.new
+  
+  a.logger.entries.length # => 0
+  u.logger.entries.length # => 0
+  
+  a.logger.debug "blah"
+  u.logger.debug "bleh"
+  
+  u.logger = a.logger
+  u.logger.debug "weee"
+  
+  a.logger.entries.length # => 2
+  u.logger.entries.length # => 1
+
 
 == Copyright
 
-Copyright (c) 2010 cjbottaro. See LICENSE for details.
+Copyright (c) 2010 Christopher J. Bottaro. See LICENSE for details.

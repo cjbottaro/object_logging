@@ -1,0 +1,53 @@
+require "object_logging/metaclass"
+require "object_logging/logger"
+
+module ObjectLogging
+  
+  def self.included(mod)
+    mod.send(:extend,  ClassMethods)
+    mod.send(:include, InstanceMethods)
+    mod.metaclass.class_eval do
+      alias_method :inherited_without_object_logging, :inherited
+      alias_method :inherited, :inherited_with_object_logging
+    end
+  end
+  
+  module ClassMethods
+    
+    def inherited_with_object_logging(mod)
+      inherited_without_object_logging(mod)
+      object_logging_copy = @object_logging && @object_logging.collect do |e|
+        begin
+          e.dup
+        rescue TypeError
+          e
+        end
+      end
+      mod.instance_variable_set("@object_logging", object_logging_copy)
+    end
+    
+    def object_logging(*args)
+      if args.empty?
+        @object_logging
+      else
+        options = args.last.kind_of?(Hash) ? args.pop : {}
+        @object_logging = [args.first, options]
+      end
+    end
+    
+  end
+  
+  module InstanceMethods
+    
+    def logger
+      @logger ||= Logger.new(self)
+      @logger.objectify(self)
+    end
+    
+    def logger=(logger)
+      @logger = logger
+    end
+    
+  end
+  
+end
