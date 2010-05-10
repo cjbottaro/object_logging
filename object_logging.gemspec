@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{object_logging}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christopher J. Bottaro"]
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
      "lib/object_logging/log/stdout.rb",
      "lib/object_logging/logger.rb",
      "lib/object_logging/metaclass.rb",
+     "object_logging.gemspec",
      "test/object_logging_test.rb",
      "test/test_helper.rb"
   ]

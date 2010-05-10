@@ -1,3 +1,7 @@
+require "object_logging/log/rails_cache"
+require "object_logging/log/rails_log"
+require "object_logging/log/stdout"
+
 module ObjectLogging
   class Logger
     
