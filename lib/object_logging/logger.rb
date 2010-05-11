@@ -38,7 +38,7 @@ module ObjectLogging
   private
     
     def instantiate_log(object)
-      type, options = object.class.object_logging
+      type, options = object.metaclass.object_logging
       type = "base", options = {} if type.nil?
       class_name = type.to_s.split("_").collect{ |word| word.capitalize }.join
       klass = ObjectLogging::Log.const_get(class_name)
@@ -48,7 +48,8 @@ module ObjectLogging
     def make_entry(level, message, options)
       method_name = options[:method_name] || get_method_name
       class_name  = options[:class_name] || get_class_name(method_name)
-      context = "#{class_name}##{method_name}"
+      invoker = @object.instance_of?(Class) ? "." : "#"
+      context = "#{class_name}#{invoker}#{method_name}"
       @log.log(level.upcase, context, message)
     end
     
@@ -63,7 +64,7 @@ module ObjectLogging
     
     def get_class_name(method_name)
       if @object.respond_to?(method_name.to_sym)
-        @object.class.name
+        @object.instance_of?(Class) ? @object.name : @object.class.name
       else
         "(unknown)"
       end

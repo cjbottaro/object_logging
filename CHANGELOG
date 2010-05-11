@@ -1,0 +1,9 @@
+0.2.0
+* feature: threadsafety
+* feature: including ObjectLogging in a class's metaclass works as expected
+
+0.1.1
+* bugfix: ObjectLogging::Log not being loaded
+
+0.1.0
+* initial release

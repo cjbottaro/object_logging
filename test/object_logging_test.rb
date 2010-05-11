@@ -54,4 +54,18 @@ class ObjectLoggingTest < Test::Unit::TestCase
     assert_equal([:rails_log, {}], s.class.object_logging)
   end
   
+  def test_static
+    Static.foo
+    assert_equal([["DEBUG", "Static.foo", "hio"]], Static.logger.entries)
+  end
+  
+  def test_threads
+    u = User.new
+    threads = (1..10).collect{ Thread.new{ u.thr } }
+    threads.each{ |thread| thread.join }
+    expected = threads.collect{ |thread| "[INFO] User#thr from thread #{thread}" }.to_set
+    actual = u.logger.entries.collect{ |level, context, message| "[#{level}] #{context} #{message}" }.to_set
+    assert_equal expected, actual
+  end
+  
 end

@@ -4,6 +4,7 @@ require 'test/unit'
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'object_logging'
+require "set"
 
 class Test::Unit::TestCase
 end
@@ -17,6 +18,10 @@ class User
   
   def bar
     logger.info("bar")
+  end
+  
+  def thr
+    logger.info("from thread #{Thread.current}")
   end
 end
 
@@ -39,4 +44,13 @@ class Person
 end
 
 class Schmuck < Person
+end
+
+class Static
+  class << self
+    include ObjectLogging
+    def foo
+      logger.debug "hio"
+    end
+  end
 end

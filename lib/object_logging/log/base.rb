@@ -1,21 +1,24 @@
+require "thread"
+
 module ObjectLogging
   module Log
     class Base
       
       def initialize(object, options)
         @storage = []
+        @lock = Mutex.new
       end
       
       def log(level, context, message)
-        @storage << [level, context, message]
+        @lock.synchronize{ @storage << [level, context, message] }
       end
       
       def entries
-        @storage
+        @lock.synchronize{ @storage.dup }
       end
       
       def clear
-        @storage = []
+        @lock.synchronize{ @storage.clear }
       end
       
     end
