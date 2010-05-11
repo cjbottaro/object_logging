@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{object_logging}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christopher J. Bottaro"]
-  s.date = %q{2010-05-10}
+  s.date = %q{2010-05-11}
   s.description = %q{It's a pain to trudge through large log files.  Sometimes you just want to see log messages for one particular object.}
   s.email = %q{cjbottaro@alumni.cs.utexas.edu}
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "CHANGELOG",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
