@@ -1,3 +1,7 @@
+0.2.1
+* bugfix: specifying log type wasn't working
+* bugfix: typo in Log::RailsCache
+
 0.2.0
 * feature: threadsafety
 * feature: including ObjectLogging in a class's metaclass works as expected
