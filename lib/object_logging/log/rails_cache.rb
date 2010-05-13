@@ -30,7 +30,7 @@ module ObjectLogging
       
       def make_key(object, options)
         id = options[:id]
-        if id.kind_of(Proc)
+        if id.kind_of?(Proc)
           key = id.call(object)
         else
           key = object.send(id)

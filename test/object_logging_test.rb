@@ -49,9 +49,11 @@ class ObjectLoggingTest < Test::Unit::TestCase
   def test_inheritance
     p = Person.new
     s = Schmuck.new
-    assert_equal p.class.object_logging, s.class.object_logging
-    assert_not_equal p.class.object_logging.object_id, s.class.object_logging.object_id
-    assert_equal([:rails_log, {}], s.class.object_logging)
+    assert_equal ObjectLogging::Log::RailsLog, p.logger.instance_variable_get("@log").class
+    assert_equal ObjectLogging::Log::RailsLog, s.logger.instance_variable_get("@log").class
+    assert_equal p.object_logging, s.object_logging
+    assert_not_equal p.object_logging.object_id, s.object_logging.object_id
+    assert_equal([:rails_log, {}], s.object_logging)
   end
   
   def test_static

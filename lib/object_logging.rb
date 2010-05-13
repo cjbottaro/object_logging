@@ -39,6 +39,14 @@ module ObjectLogging
   
   module InstanceMethods
     
+    def object_logging
+      if instance_of?(Class)
+        self.metaclass.object_logging
+      else
+        self.class.object_logging
+      end
+    end
+    
     def logger
       @logger ||= Logger.new(self)
       @logger.objectify(self)

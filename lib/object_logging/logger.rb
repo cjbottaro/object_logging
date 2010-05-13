@@ -38,7 +38,7 @@ module ObjectLogging
   private
     
     def instantiate_log(object)
-      type, options = object.metaclass.object_logging
+      type, options = object.object_logging
       type = "base", options = {} if type.nil?
       class_name = type.to_s.split("_").collect{ |word| word.capitalize }.join
       klass = ObjectLogging::Log.const_get(class_name)
