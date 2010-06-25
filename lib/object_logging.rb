@@ -49,7 +49,11 @@ module ObjectLogging
     
     def logger
       @logger ||= Logger.new(self)
-      @logger.objectify(self)
+      
+      # User could have assigned a logger other than ObjectLogging::Logger to this object.
+      @logger.objectify(self) if @logger.instance_of?(ObjectLogging::Logger) # Hence the guard.
+      
+      @logger
     end
     
     def logger=(logger)
